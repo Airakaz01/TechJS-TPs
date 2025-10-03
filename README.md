@@ -1,1 +1,1 @@
-# Technologies_JS_-_Programmation_Mobile
+# TechJS TPs
