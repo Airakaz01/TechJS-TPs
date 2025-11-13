@@ -1,0 +1,59 @@
+extends layout.pug
+
+block content
+  .max-w-4xl.w-full.bg-white.p-8.rounded-lg.shadow-md
+    .flex.justify-between.items-center.mb-6
+      h2.text-2xl.font-bold.text-gray-800 Bienvenue, #{user.username}!
+      a.bg-red-500.text-white.font-bold.py-2.px-4.rounded(href="/auth/logout", class="hover:bg-red-700") Déconnexion
+
+    .mb-8
+      h3.text-xl.font-semibold.mb-4.text-gray-700 Statistiques Globales
+      .grid.grid-cols-2.gap-4.text-gray-600
+        div
+          strong Total Livres dans la Collection:
+          span &nbsp;#{totalNumberOfBooks}
+        div
+          strong Total Pages dans la Collection:
+          span &nbsp;#{totalPagesInCollection}
+        div
+          strong Livres Terminés (Lus/Relus):
+          span &nbsp;#{totalBooksRead}
+        div
+          strong Total Pages Lues:
+          span &nbsp;#{totalPagesRead}
+    
+    .flex.justify-between.items-center.mb-6
+      h3.text-xl.font-semibold.text-gray-700 Votre Collection de Livres
+      a.bg-blue-500.text-white.font-bold.py-2.px-4.rounded(href="/books/add", class="hover:bg-blue-700") Ajouter un livre
+    
+    if error
+        p.bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.relative.mb-4 #{error}
+
+    if books && books.length > 0
+      .overflow-x-auto
+        table.min-w-full.bg-white.border.border-gray-200.rounded-lg.shadow-sm
+          thead.bg-gray-50
+            tr
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Titre
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Auteur
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Pages
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Lues
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase % Lu
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Statut
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Format
+              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase Terminé
+          tbody.divide-y.divide-gray-200
+            each book in books
+              tr
+                td.px-6.py-4.whitespace-nowrap.text-sm.font-medium.text-gray-900 #{book.title}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.author}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.numberOfPages}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.numberOfPagesRead}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.percentageRead}%
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.status}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700 #{book.format}
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-700
+                  span.px-2.inline-flex.text-xs.leading-5.font-semibold.rounded-full(class=book.finished ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800')
+                    | #{book.finished ? 'Oui' : 'Non'}
+    else
+      p.text-center.text-gray-600 Aucun livre dans votre collection.

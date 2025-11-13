@@ -1,0 +1,44 @@
+extends layout.pug
+
+block content
+  .max-w-md.w-full.bg-white.p-8.rounded-lg.shadow-md
+    h2.text-2xl.font-bold.mb-6.text-center.text-gray-800 Ajouter un nouveau livre
+    if errors && errors.length > 0
+      each error in errors
+        p.bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.relative.mb-4 #{error.msg}
+    if error
+        p.bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.relative.mb-4 #{error}
+
+    form(action="/books/add", method="POST")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="title") Titre du livre
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="text", id="title", name="title", placeholder="Titre", value=book ? book.title : '', required, class="focus:outline-none focus:shadow-outline")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="author") Auteur
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="text", id="author", name="author", placeholder="Auteur", value=book ? book.author : '', required, class="focus:outline-none focus:shadow-outline")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="numberOfPages") Nombre total de pages
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="number", id="numberOfPages", name="numberOfPages", placeholder="Nombre total de pages", value=book ? book.numberOfPages : '', min="1", required, class="focus:outline-none focus:shadow-outline")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="numberOfPagesRead") Nombre de pages lues
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="number", id="numberOfPagesRead", name="numberOfPagesRead", placeholder="Pages lues", value=book ? book.numberOfPagesRead : '0', min="0", required, class="focus:outline-none focus:shadow-outline")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="status") Statut de lecture
+        select.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(id="status", name="status", required, class="focus:outline-none focus:shadow-outline")
+          each val in Object.values(BookStatus)
+            option(value=val, selected=(book && book.status === val)) #{val}
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="price") Prix (€)
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="number", id="price", name="price", placeholder="Prix", value=book ? book.price : '', step="0.01", min="0", required, class="focus:outline-none focus:shadow-outline")
+      .mb-4
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="format") Format
+        select.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(id="format", name="format", required, class="focus:outline-none focus:shadow-outline")
+          each val in Object.values(BookFormat)
+            option(value=val, selected=(book && book.format === val)) #{val}
+      .mb-6
+        label.block.text-gray-700.text-sm.font-bold.mb-2(for="suggestedBy") Suggéré par (optionnel)
+        input.shadow.appearance-none.border.rounded.w-full.py-2.px-3.text-gray-700.leading-tight(type="text", id="suggestedBy", name="suggestedBy", placeholder="Nom du suggéreur", value=book ? book.suggestedBy : '', class="focus:outline-none focus:shadow-outline")
+      
+      .flex.items-center.justify-between
+        button.bg-blue-500.text-white.font-bold.py-2.px-4.rounded(type="submit", class="hover:bg-blue-700 focus:outline-none focus:shadow-outline") Ajouter
+        a.inline-block.align-baseline.font-bold.text-sm.text-gray-500(href="/books", class="hover:text-gray-800") Retour

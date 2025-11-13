@@ -1,0 +1,18 @@
+extends layout.pug 
+
+block content 
+  h2 Ajouter un nouveau livre
+
+  if error 
+      p(style='color: red;') #{error}
+
+  form(action="/books/add", method="POST") 
+    div
+      label(for="title") Titre du livre:
+      input(type="text", id="title", name="title", placeholder="Titre", required)
+    div
+      label(for="author") Auteur:
+      input(type="text", id="author", name="author", placeholder="Auteur", required)
+    div
+      button(type="submit") Ajouter
+      a(href="/books") Retour 

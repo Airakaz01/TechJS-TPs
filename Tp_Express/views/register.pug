@@ -1,0 +1,24 @@
+extends layout.pug 
+
+block content 
+  h2 Créer un compte
+  // Affichage des erreurs, si présentes (seront implémentées plus tard)
+  if errors
+    each error in errors
+      p(style='color: red;') #{error.msg}
+
+  form(action="/auth/register", method="POST")
+    div
+      label(for="username") Nom d'utilisateur:
+      input(type="text", id="username", name="username", placeholder="Nom d'utilisateur", value=username || '')
+    div
+      label(for="password") Mot de passe:
+      input(type="password", id="password", name="password", placeholder="Mot de passe", value=password || '')
+    div
+      label(for="password2") Confirmer le mot de passe:
+      input(type="password", id="password2", name="password2", placeholder="Confirmer le mot de passe", value=password2 || '')
+    div
+      button(type="submit") S'inscrire
+  p
+    | Déjà un compte ?&nbsp;
+    a(href="/auth/login") Connectez-vous

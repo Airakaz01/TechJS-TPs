@@ -1,0 +1,20 @@
+extends layout.pug
+
+block content 
+  h2 Bienvenue, #{user.username}! 
+  h3 Notre collection de livres
+
+  p
+    a(href="/books/add") Ajouter un livre
+
+  if books.length > 0
+    ul 
+      each book in books
+        li
+          strong #{book.title} 
+          |  par #{book.author} 
+  else
+    p Aucun livre disponible pour le moment.
+
+  p
+    a(href="/auth/logout") Déconnexion
