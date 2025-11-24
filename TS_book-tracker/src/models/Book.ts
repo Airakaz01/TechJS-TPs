@@ -1,9 +1,6 @@
-// src/models/Book.ts
-
 import { Schema, model, Document } from 'mongoose';
-import { IBook, BookStatus, BookFormat } from '../types/book.js'; // Assurez-vous que le chemin est correct
+import { IBook, BookStatus, BookFormat } from '../types/book.js';
 
-// Étend l'interface IBook avec les propriétés que Mongoose ajoute aux documents
 export interface IBookDocument extends IBook, Document {}
 
 const BookSchema = new Schema<IBookDocument>({
@@ -16,7 +13,6 @@ const BookSchema = new Schema<IBookDocument>({
         type: Number,
         required: true,
         min: 0,
-        // Validation personnalisée pour s'assurer que numberOfPagesRead <= numberOfPages
         validate: {
             validator: function(this: IBookDocument, v: number) {
                 return v <= this.numberOfPages;
@@ -25,22 +21,19 @@ const BookSchema = new Schema<IBookDocument>({
         }
     },
     format: { type: String, enum: Object.values(BookFormat), required: true },
-    suggestedBy: { type: String, required: false }, // Optionnel
+    suggestedBy: { type: String, required: false },
     finished: { type: Boolean, default: false, required: true },
 }, {
-    timestamps: true // Ajoute createdAt et updatedAt automatiquement
+    timestamps: true
 });
 
-// --- Logique pour 'finished' : Mettre à jour automatiquement avant la sauvegarde ---
 BookSchema.pre<IBookDocument>('save', function(next) {
-    // Si le nombre de pages lues est égal au nombre total de pages, marquer comme terminé
     if (this.numberOfPagesRead === this.numberOfPages) {
         this.finished = true;
     } else {
-        this.finished = false; // Sinon, s'assurer que ce n'est pas terminé
+        this.finished = false;
     }
     next();
 });
 
-// Exporte le modèle Mongoose 'Book'
 export default model<IBookDocument>('Book', BookSchema);

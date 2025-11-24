@@ -1,35 +1,25 @@
 {
   "compilerOptions": {
-    /* Language and Environment Options */
-    "target": "ES2022",                                  /* Specify JavaScript target version for emitted JavaScript code. */
-    "module": "Node16",                                  /* Specify what module code is generated. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
-
-    /* Type Checking */
-    "strict": true,                                      /* Enable all strict type-checking options. */
-    "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
-    "noEmitOnError": true,                               /* Disable emitting files if any type checking errors are reported. */
-
-    /* Modules */
-    "moduleResolution": "Node16",                        /* Specify how modules are resolved. */
-    "baseUrl": ".",                                      /* Specify the base directory to resolve non-relative module names. */
-    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
-
-    /* Emit */
-    "outDir": "./dist",                                  /* Specify an output folder for all emitted files. */
-
-    /* Interop Constraints */
-    "resolveJsonModule": true,                           /* Enable importing .json files. */
-
-    /* Advanced Options */
-    "sourceMap": true,                                   /* Generate .map files for debugging. */
-    "typeRoots": ["./node_modules/@types", "./types"]    /* Specify multiple folders that act like `node_modules/@types`. */
+    "target": "ES2022",
+    "module": "Node16",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmitOnError": true,
+    "moduleResolution": "Node16",
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [
     "src/**/*.ts",
-    "types/**/*.d.ts" // Inclure les fichiers de déclaration de type personnalisés
-, "types/book.d.ts"  ],
+    "types/**/*.d.ts",
+    "types/book.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"
